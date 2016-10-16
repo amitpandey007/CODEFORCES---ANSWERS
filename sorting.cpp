@@ -168,6 +168,38 @@ int merge_sorting(int ar[],int l,int u)
    	 merge(ar,l,k,u);
    }
 }
+//	RADIX SORT STARTS......................
+void count_sort(int ar[],int n,int k) {
+    int o[n+1];
+    int c[10]={0};
+
+    for(int i=0;i<n;i++) {
+        c[(ar[i]/k)%10]++;
+    }
+    for(int i=1;i<10;i++) {
+        c[i]+=c[i-1];
+    }
+    for(int i=n-1;i>=0;i--) {
+        o[c[(ar[i]/k)%10]-1]=ar[i];
+        c[(ar[i]/k)%10]--;
+    }
+    for(int i=0;i<n;i++)
+        ar[i]=o[i];
+}
+
+void radix_sort(int ar[],int n) {
+    int max=0;
+    for(int i=0;i<n;i++) {
+        if(ar[i]>max)
+            max=ar[i];
+    }
+    	for (int i= 1; max/i > 0; i*= 10)
+		count_sort(ar, n, i);
+
+}
+
+//	RADIX SORT ENDS....................
+
 int main(){
 	ios_base::sync_with_stdio(0);
 int n;cin>>n;
@@ -182,6 +214,7 @@ for (int i = 0; i < n; ++i)
 //selection_sorting(ar,n);
 //quick_sorting(ar,0,n-1);
 //merge_sorting(ar,0,n-1);
+//radix_sort(ar,n);
 for (int i = 0; i < n; ++i)
 {
 	cout<<ar[i]<<" ";
